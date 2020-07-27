@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ClientForm</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<style>
+
+	</style>
+</head>
+<body>
+	<div id="container">
+		<h1>Создание клиента</h1>
+		<form action="#" id="clientForm">
+			<label for="lastName">Фамилия</label>
+			<input type="text" id="lastName">
+
+			<label for="firstName">Имя</label>
+			<input type="text" id="firstName">
+
+			<label for="middleName">Отчество</label>
+			<input type="text" id="middleName">
+
+			<label for="birthday">Дата рождения</label>
+			<input type="text" id="birthday">
+
+			<label for="phone">Номер телефона</label>
+			<input type="text" id="phone">
+
+			<label for="gender">Пол</label>
+			<input type="text" id="gender">
+
+			<select multiple>
+				<option>VIP</option>
+				<option>Проблемные</option>
+				<option>ОМС</option>
+			</select>
+
+			<select>
+				<option>Иванов</option>
+				<option>Захаров</option>
+				<option>Чернышева</option>
+			</select>
+
+			<label for="dontSendMessage">Не оправлять смс</label>
+			<input type="checkbox" id="dontSendMessage">
+
+
+			<fieldset>
+				Адрес:
+
+				<select>
+					<option>Иванов</option>
+					<option>Захаров</option>
+					<option>Чернышева</option>
+				</select>
+
+				<label for="postcode">Индекс</label>
+				<input type="text" id="postcode">
+
+				<label for="country">Страна</label>
+				<input type="text" id="country">
+
+				<label for="district">Область</label>
+				<input type="text" id="district">
+
+				<label for="sity">Город</label>
+				<input type="text" id="sity">
+
+				<label for="street">Улица</label>
+				<input type="text" id="street">
+
+				<label for="house">Улица</label>
+				<input type="text" id="house">
+
+			</fieldset>
+
+			<fieldset>
+				Паспорт:
+
+				<select>
+					<option>Паспорт</option>
+					<option>Свидетельство o рождении</option>
+					<option>Вод. удостоверение</option>
+				</select>
+
+				<label for="postcode">Серия</label>
+				<input type="text" id="postcode">
+
+				<label for="country">Номер</label>
+				<input type="text" id="country">
+
+				<label for="district">Дата выдачи</label>
+				<input type="text" id="district">
+
+
+			</fieldset>
+
+		</form>
+	</div>
+
+	<script>
+		Vue.component('client-form', {
+			template: '<div>Client Form</div>',
+		});
+
+		let app = new Vue({
+			el: '#container',
+			data: {
+				message: 'Start vue developer'
+			}
+		});
+
+
+	</script>
+</body>
+</html>
