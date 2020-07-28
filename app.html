@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>App</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+	<h1>Форма создания клиента</h1>
+	<form
+	  id="app"
+	  @submit="checkForm"
+	  action="https://vuejs.org/"
+	  method="post"
+	>
+
+	<p v-if="errors.length">
+		<b>Пожалуйста исправьте указанные ошибки:</b>
+		<ul>
+		  <li v-for="error in errors">{{ error }}</li>
+		</ul>
+	</p>
+
+	<p>
+		<label for="lastName">Фамилия</label>
+		<input type="text" v-model="lastName" id="lastName"  name="lastName">
+	</p>
+
+	<p>
+		<label for="firstName">Имя</label>
+		<input type="text" v-model="firstName" id="firstName" name="firstName">
+	</p>
+
+	<p>
+		<label for="middleName">Отчество</label>
+		<input type="text" id="middleName">
+	</p>
+
+		<label for="birthday">Дата рождения</label>
+		<input type="text" id="birthday">
+
+		<label for="phone">Номер телефона</label>
+		<input type="text" id="phone">
+
+		<label for="gender">Пол</label>
+		<input type="text" id="gender">
+
+		<select name="uu" multiple>
+			<option>VIP</option>
+			<option>Проблемные</option>
+			<option>ОМС</option>
+		</select>
+
+		<select name="gh">
+			<option>Иванов</option>
+			<option>Захаров</option>
+			<option>Чернышева</option>
+		</select>
+
+		<label for="dontSendMessage">Не оправлять смс</label>
+		<input type="checkbox" id="dontSendMessage">
+
+		<fieldset>
+			Адрес:
+
+			<label for="postcode">Индекс</label>
+			<input type="text" id="postcode">
+
+			<label for="country">Страна</label>
+			<input type="text" id="country">
+
+			<label for="district">Область</label>
+			<input type="text" id="district">
+
+			<label for="sity">Город</label>
+			<input type="text" id="sity">
+
+			<label for="street">Улица</label>
+			<input type="text" id="street">
+
+			<label for="house">Улица</label>
+			<input type="text" id="house">
+
+		</fieldset>
+
+		<fieldset>
+			Паспорт:
+
+			<select id="passport">
+				<option>Паспорт</option>
+				<option>Свидетельство o рождении</option>
+				<option>Вод. удостоверение</option>
+			</select>
+
+			<label for="series">Серия</label>
+			<input type="text" id="series">
+
+			<label for="number">Номер</label>
+			<input type="text" id="number">
+
+			<label for="dateIssue">Дата выдачи</label>
+			<input type="text" id="dateIssue">
+
+		</fieldset>
+
+	  <p>
+		<input
+		  type="submit"
+		  value="Отправить"
+		>
+	  </p>
+
+	</form>
+
+<script>
+	const app = new Vue({
+	  el: '#app',
+	  data: {
+		errors: [],
+		lastName: null,
+		firstName: null,
+	  },
+	  methods: {
+		checkForm: function (e) {
+		  if (this.lastName && this.firstName ) {
+			return true;
+		  }
+
+		  this.errors = [];
+
+		  if (!this.lastName) {
+			this.errors.push('Требуется указать фамилию.');
+		  }
+
+		  if (!this.firstName) {
+			this.errors.push('Требуется указать имя.');
+		  }
+
+		  e.preventDefault();
+		}
+	  }
+	})
+</script>
+</body>
+</html>
