@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="UTF-8">
 	<title>Simon</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<style>
 		body {
 			font-family: Arial, serif;
@@ -138,16 +139,87 @@
 			clear: both;
 			text-align: center;
 		}
+		button {
+			text-align: center;
+		}
+
+		.animate-opacity {
+			transition-property: opacity;
+			transition-duration: 3s;
+		}
 	</style>
 </head>
 <body>
-	<div class="simon">
+
+	<div class="simon" id="app">
 		<ul>
-			<li class="red" data-tile="1"></li>
+			<li class="red animate-opacity" data-tile="1"></li>
 			<li class="blue" data-tile="2"></li>
 			<li class="yellow" data-tile="3"></li>
 			<li class="green" data-tile="4"></li>
 		</ul>
+
+		<button type="button" id="start" v-on:click="startGame">Start</button>
 	</div>
+
+
+	<script>
+		const app = new Vue({
+			el: '#app',
+			data: {
+
+				red: null,
+				blue: null,
+				yellow: null,
+				green: null,
+
+				round: 0,
+				ell: '',
+
+			},
+
+			methods: {
+				startGame: function(event) {
+
+					let lightingEl = this.randomArea();
+					this.lighting(lightingEl);
+				},
+
+				randomArea: function () {
+					let rand = Math.random()*4+1;
+					return Math.floor(rand);
+				},
+				lighting: function (el) {
+					switch (el) {
+						case 1:
+							this.ell = document.querySelector('.red');
+							this.ell.classList.add('active');
+							console.log(this.ell);
+							setTimeout(this.ell.classList.remove('active'),2000);
+							console.log(1);
+							console.log(this.ell);
+							break;
+
+						case 2:
+							console.log(2);
+							this.ell = document.querySelector('.blue');
+							this.ell.classList.add('active');
+							setTimeout(this.ell.classList.remove('active'),2000);
+							break;
+
+						case 3:
+							console.log(3);
+							break;
+
+						case 4:
+							console.log(4);
+							break;
+					}
+				}
+
+
+			}
+		});
+	</script>
 </body>
 </html>

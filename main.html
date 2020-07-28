@@ -24,10 +24,8 @@
 </head>
 <body>
 	<div id="app">
-<<<<<<< HEAD
 		<h1>Форма создания клиента</h1>
-=======
->>>>>>> f2625d49ef26a92eafc28baee8b06abccb93287c
+
 		<form  @submit="checkForm"  action="https://vuejs.org/" method="post">
 			<p v-if="errors.length">
 				<b>Пожалуйста исправьте указанные ошибки:</b>
@@ -35,8 +33,7 @@
 				  <li v-for="error in errors">{{ error }}</li>
 				</ul>
 			</p>
-<<<<<<< HEAD
-=======
+
 
 			<label for="name">Фамилия</label>
 			<input type="text" id="name" v-model="name" name="name">
@@ -46,7 +43,7 @@
 
 			<label for="middleName">Отчество</label>
 			<input type="text" id="middleName">
->>>>>>> f2625d49ef26a92eafc28baee8b06abccb93287c
+
 
 			<fieldset>
 				<label for="name">Фамилия</label>
@@ -55,13 +52,12 @@
 				<label for="firstName">Имя</label>
 				<input type="text" id="firstName">
 
-<<<<<<< HEAD
 				<label for="middleName">Отчество</label>
 				<input type="text" id="middleName">
 
 				<label for="birthday">Дата рождения</label>
 				<input type="text" id="birthday">
-=======
+
 			<select name="uu" multiple>
 				<option>VIP</option>
 				<option>Проблемные</option>
@@ -73,12 +69,11 @@
 				<option>Захаров</option>
 				<option>Чернышева</option>
 			</select>
->>>>>>> f2625d49ef26a92eafc28baee8b06abccb93287c
+
 
 				<label for="phone">Номер телефона</label>
 				<input type="text" id="phone">
 
-<<<<<<< HEAD
 				<label for="gender">Пол</label>
 				<input type="text" id="gender">
 
@@ -101,11 +96,11 @@
 			<fieldset>
 				<div>Адрес:</div>
 
-=======
+
 			<fieldset>
 				Адрес:
 
->>>>>>> f2625d49ef26a92eafc28baee8b06abccb93287c
+
 				<label for="postcode">Индекс</label>
 				<input type="text" id="postcode">
 
@@ -153,7 +148,7 @@
 	</div>
 
 	<script>
-<<<<<<< HEAD
+
 		const app = new Vue({
 			el: '#app',
 
@@ -181,39 +176,6 @@
 			}
 		});
 	</script>
-=======
-			/*Vue.component('client-form', {
-				template: '<div>Client Form</div>',
-			});*/
 
-			let app = new Vue({
-				el: '#app',
-
-				data() {
-					return{
-						message: 'Start vue developer',
-						errors: [],
-						name: null,
-					}
-				},
-
-				method: {
-					checkForm(e) {
-						if (this.name) {
-							return true;
-						}
-
-						this.errors = [];
-
-						if(!this.name) {
-							this.errors.push('Заполните пожалуйста поле Фамилия');
-						}
-
-						e.preventDefault();
-					}
-				}
-			});
-		</script>
->>>>>>> f2625d49ef26a92eafc28baee8b06abccb93287c
 </body>
 </html>
