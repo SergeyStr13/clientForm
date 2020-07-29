@@ -155,10 +155,10 @@
 
 	<div class="simon" id="app">
 		<ul>
-			<li v-bind:class="[{active: red}, 'red']" 		data-tile="1" v-on:click="buttonClick"></li>
-			<li v-bind:class="[{active: blue}, 'blue']" 	data-tile="2" v-on:click="buttonClick"></li>
-			<li v-bind:class="[{active: yellow}, 'yellow']" 	data-tile="3" v-on:click="buttonClick"></li>
-			<li v-bind:class="[{active: green}, 'green']" 	data-tile="4" v-on:click="buttonClick"></li>
+			<li v-bind:class="[{active: red}, 'red']"		data-tile="1" v-on:click="buttonClick"></li>
+			<li v-bind:class="[{active: blue}, 'blue']"		data-tile="2" v-on:click="buttonClick"></li>
+			<li v-bind:class="[{active: yellow}, 'yellow']"	data-tile="3" v-on:click="buttonClick"></li>
+			<li v-bind:class="[{active: green}, 'green']"	data-tile="4" v-on:click="buttonClick"></li>
 		</ul>
 
 		<button type="button" id="start" v-on:click="startGame">Start</button>
@@ -178,8 +178,6 @@
 				round: 0,
 				starded: false,
 
-				ell: '',
-				isActive: false,
 
 				series: [],
 				userSeries: [],
@@ -202,7 +200,7 @@
 
 				resetGame: function () {
 					this.round = 0;
-					this.isActive = false;
+
 					this.series = [];
 					this.userSeries = [];
 
@@ -229,41 +227,35 @@
 				lighting: function (el) {
 					switch (el) {
 						case 1:
-							this.ell = document.querySelector('.red');
-							//this.ell.classList.add('active');
-							this.red = true;
-							//setTimeout(this.isActive = false, 2000);
-
 							console.log(1);
+							this.ell = document.querySelector('.red');
 							console.log(this.ell);
 
+							this.red = true;
 							this.series.push(1);
 							break;
 
 						case 2:
 							console.log(2);
-							//this.ell = document.querySelector('.blue');
-							this.blue = true;
 
+							this.blue = true;
 							this.series.push(2);
 							break;
 
 						case 3:
-							//this.ell = document.querySelector('.yellow');
 							console.log(3);
+
 							this.yellow = true;
 							this.series.push(3);
 							break;
 
 						case 4:
-							//this.ell = document.querySelector('.green');
 							console.log(4);
+
 							this.green = true;
 							this.series.push(4);
 							break;
 					}
-
-
 				}
 			}
 		});
