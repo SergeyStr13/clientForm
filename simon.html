@@ -160,9 +160,11 @@
 			<li v-bind:class="[{active: yellow}, 'yellow']"	data-tile="3" v-on:click="buttonClick"></li>
 			<li v-bind:class="[{active: green}, 'green']"	data-tile="4" v-on:click="buttonClick"></li>
 		</ul>
-
+		<div>Уровень {{ round }}</div>
 		<button type="button" id="start" v-on:click="startGame">Start</button>
 		<button type="button" id="reset" v-on:click="resetGame">Reset</button>
+
+		<div data-action="sound"></div>
 	</div>
 
 	<script>
@@ -176,31 +178,51 @@
 				green: false,
 
 				round: 0,
+				countLight: 0,
 				starded: false,
 
 
 				series: [],
 				userSeries: [],
+				check: false,
 
 			},
 
 			methods: {
 				startGame: function(event) {
-
-					this.resetGame();
+					//this.resetGame();
 					this.starded = true;
 
+					console.log('Текущий уровень', this.round);
 
-					/*for(let i=0; i >= this.round; i++) {*/
-						let lightingRandom = this.getRandom();
-						this.lighting(lightingRandom);
+					this.countLight = this.round + 1;
+					console.log('Подсвечиваю', this.countLight);
 
-					/*}*/
+					for (let i = 0; i < this.countLight; i++) {
+						setTimeout( () => this.lighting(this.getRandom()), 2000);
+					}
+
+				/*	if (this.countLight !== 0) {
+						console.log('Подсвечиваю', this.countLight);
+
+						this.lighting(this.getRandom());
+
+						this.countLight =  this.countLight - 1;
+						console.log('Осталость', this.countLight);
+
+						setTimeout(this.startGame, 1000);
+
+					} else {
+						this.countLight =
+					}*/
+
 				},
 
-				resetGame: function () {
-					this.round = 0;
 
+				resetGame: function (event) {
+					/*console.log(event);
+					this.round = (event === MouseEvent) ?? 0;*/
+					this.round = 0;
 					this.series = [];
 					this.userSeries = [];
 
@@ -212,11 +234,34 @@
 				},
 
 				buttonClick: function (event) {
-					let clickElement = event.target;
+					let clickElement = event.target.dataset.tile;
 
+					this.playSound(clickElement);
+					this.userSeries.push(clickElement);
+					console.log('user click',clickElement);
 
-					this.userSeries.push(event.target.dataset.tile);
-					console.log(event.target.dataset.tile);
+					this.checkSeries(clickElement);
+				},
+
+				checkSeries: function(clickElement) {
+					this.series.forEach((item) => {
+						console.log('foreach', clickElement);
+						console.log('item', item);
+
+						if (item == clickElement) {
+						} else {
+							console.log('Вы проиграли, попробуете  сначала', this.round);
+							this.resetGame();
+						}
+					});
+
+					console.log('Правильный ответ', this.round);
+					this.round = this.round+1;
+					this.series = [];
+					this.userSeries = [];
+
+					setTimeout(this.startGame, 2000);
+
 				},
 
 				getRandom: function () {
@@ -228,17 +273,19 @@
 					switch (el) {
 						case 1:
 							console.log(1);
-							this.ell = document.querySelector('.red');
-							console.log(this.ell);
-
 							this.red = true;
+							this.playSound(1);
+							setTimeout(() => this.red = false, 1000);
+
 							this.series.push(1);
 							break;
 
 						case 2:
 							console.log(2);
-
 							this.blue = true;
+							this.playSound(2);
+							setTimeout(() => this.blue = false, 1000);
+
 							this.series.push(2);
 							break;
 
@@ -246,6 +293,9 @@
 							console.log(3);
 
 							this.yellow = true;
+							this.playSound(3);
+							setTimeout(() => this.yellow = false, 1000);
+
 							this.series.push(3);
 							break;
 
@@ -253,10 +303,24 @@
 							console.log(4);
 
 							this.green = true;
+							this.playSound(4);
+							setTimeout(() => this.green = false, 1000);
+
 							this.series.push(4);
 							break;
 					}
-				}
+
+				},
+
+				playSound: function(el) {
+					let audio = document.createElement('audio');
+					audio.setAttribute('autoplay', 'true');
+					audio.insertAdjacentHTML("afterbegin", '<source src="sounds/' + el + '.ogg" type="audio/ogg" />');
+					audio.insertAdjacentHTML("afterbegin",'<source src="sounds/' + el + '.mp3" type="audio/mp3" />');
+					console.log(document.querySelector('[data-action=sound]'));
+
+					document.querySelector('[data-action=sound]').append(audio);
+				},
 			}
 		});
 	</script>
