@@ -172,6 +172,7 @@
 			el: '#app',
 			data: {
 
+				delay: 0,
 				red: false,
 				blue: false,
 				yellow: false,
@@ -179,27 +180,32 @@
 
 				round: 0,
 				countLight: 0,
-				starded: false,
+				stardedRound: false,
 
 
 				series: [],
 				userSeries: [],
-				check: false,
+				usersClickCount: 0,
 
 			},
 
 			methods: {
 				startGame: function(event) {
 					//this.resetGame();
-					this.starded = true;
+					this.series = [];
+					this.userSeries = [];
+					this.usersClickCount = 0;
 
+					this.stardedRound = true;
 					console.log('Текущий уровень', this.round);
 
 					this.countLight = this.round + 1;
-					console.log('Подсвечиваю', this.countLight);
+					console.log('Подсвечиваю '+this.countLight+' элементов');
+
 
 					for (let i = 0; i < this.countLight; i++) {
-						setTimeout( () => this.lighting(this.getRandom()), 2000);
+						setTimeout( () => this.lighting(this.getRandom()), 1000 + this.delay);
+						this.delay += 400;
 					}
 
 				/*	if (this.countLight !== 0) {
@@ -220,11 +226,12 @@
 
 
 				resetGame: function (event) {
-					/*console.log(event);
-					this.round = (event === MouseEvent) ?? 0;*/
 					this.round = 0;
+					this.delay =  0;
 					this.series = [];
 					this.userSeries = [];
+
+					this.stardedRound = false;
 
 					this.red = false;
 					this.blue  = false;
@@ -234,35 +241,37 @@
 				},
 
 				buttonClick: function (event) {
-					let clickElement = event.target.dataset.tile;
-
+					let clickElement = +event.target.dataset.tile;
 					this.playSound(clickElement);
 					this.userSeries.push(clickElement);
 					console.log('user click',clickElement);
 
 					this.checkSeries(clickElement);
+
+					if (this.countLight === this.usersClickCount) {
+						console.log('Вы выиграли', this.round);
+						this.round = this.round + 1;
+
+						setTimeout(this.startGame, 2000);
+					} else {
+						console.log('Игра окончена', this.round);
+						this.resetGame();
+					}
 				},
 
 				checkSeries: function(clickElement) {
-					this.series.forEach((item) => {
+					if (this.series.shift() === clickElement) {
 						console.log('foreach', clickElement);
-						console.log('item', item);
+						console.log('item', this.series.shift());
 
-						if (item == clickElement) {
-						} else {
-							console.log('Вы проиграли, попробуете  сначала', this.round);
-							this.resetGame();
-						}
-					});
-
-					console.log('Правильный ответ', this.round);
-					this.round = this.round+1;
-					this.series = [];
-					this.userSeries = [];
-
-					setTimeout(this.startGame, 2000);
-
+						this.usersClickCount++;
+					} else {
+						console.log('Вы проиграли, попробуете  сначала', this.round);
+						this.resetGame();
+					}
+					return true;
 				},
+
 
 				getRandom: function () {
 					let rand = Math.random()*4+1;
