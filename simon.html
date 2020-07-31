@@ -145,10 +145,22 @@
 			text-align: center;
 		}
 
-				.animate-opacity {
+		#reset {
+			float: right;
+		}
+
+		.animate-opacity {
 			transition-property: opacity;
 			transition-duration: 3s;
 		}
+
+		.level {
+			position: absolute;
+			margin-top: 250px;
+
+		}
+
+
 	</style>
 </head>
 <body>
@@ -165,6 +177,26 @@
 		<button type="button" id="reset" v-on:click="resetGame">Reset</button>
 
 		<div data-action="sound"></div>
+
+		<div class="level">
+			<p>Сложность:</p>
+
+			<label>
+				 1
+				<input type="radio" name="level" class="level" value="1">
+			</label>
+
+			<label>
+				2
+				<input type="radio" name="level" class="level" value="2">
+			</label>
+
+			<label>
+				3
+				<input type="radio" name="level" class="level" value="3">
+			</label>
+
+		</div>
 	</div>
 
 	<script>
@@ -180,8 +212,7 @@
 
 				round: 0,
 				countLight: 0,
-				stardedRound: false,
-
+				endRound: false,
 
 				series: [],
 				userSeries: [],
@@ -191,39 +222,21 @@
 
 			methods: {
 				startGame: function(event) {
-					//this.resetGame();
 					this.series = [];
 					this.userSeries = [];
+					this.endRound = false;
 					this.usersClickCount = 0;
+					this.delay =  0;
 
-					this.stardedRound = true;
-					console.log('Текущий уровень', this.round);
-
+					console.log('Новая игра. Раунд:', this.round);
 					this.countLight = this.round + 1;
 					console.log('Подсвечиваю '+this.countLight+' элементов');
-
 
 					for (let i = 0; i < this.countLight; i++) {
 						setTimeout( () => this.lighting(this.getRandom()), 1000 + this.delay);
 						this.delay += 400;
 					}
-
-				/*	if (this.countLight !== 0) {
-						console.log('Подсвечиваю', this.countLight);
-
-						this.lighting(this.getRandom());
-
-						this.countLight =  this.countLight - 1;
-						console.log('Осталость', this.countLight);
-
-						setTimeout(this.startGame, 1000);
-
-					} else {
-						this.countLight =
-					}*/
-
 				},
-
 
 				resetGame: function (event) {
 					this.round = 0;
@@ -231,7 +244,8 @@
 					this.series = [];
 					this.userSeries = [];
 
-					this.stardedRound = false;
+					this.countLight = 0;
+					this.endRound = false;
 
 					this.red = false;
 					this.blue  = false;
@@ -242,33 +256,37 @@
 
 				buttonClick: function (event) {
 					let clickElement = +event.target.dataset.tile;
+					console.log('user click',clickElement);
 					this.playSound(clickElement);
 					this.userSeries.push(clickElement);
-					console.log('user click',clickElement);
 
 					this.checkSeries(clickElement);
 
-					if (this.countLight === this.usersClickCount) {
-						console.log('Вы выиграли', this.round);
-						this.round = this.round + 1;
-
-						setTimeout(this.startGame, 2000);
-					} else {
-						console.log('Игра окончена', this.round);
-						this.resetGame();
-					}
 				},
 
 				checkSeries: function(clickElement) {
 					if (this.series.shift() === clickElement) {
-						console.log('foreach', clickElement);
-						console.log('item', this.series.shift());
-
+						console.log('Клик '+clickElement+'  правильный, Ждем еще', this.series);
 						this.usersClickCount++;
+
+						if( this.countLight === this.usersClickCount) {
+							this.endRound = true;
+
+							let displayRound = this.round;
+							alert('Вы выиграли. Следующий раунд'+ displayRound++);
+							console.log('Вы выиграли', this.round);
+
+							this.round = this.round + 1;
+							setTimeout(this.startGame, 2000);
+
+						}
+
 					} else {
+						alert('Вы проиграли, попробуете  сначала! Ваш раунд '+ this.round);
 						console.log('Вы проиграли, попробуете  сначала', this.round);
 						this.resetGame();
 					}
+
 					return true;
 				},
 
@@ -281,7 +299,7 @@
 				lighting: function (el) {
 					switch (el) {
 						case 1:
-							console.log(1);
+							//console.log(1);
 							this.red = true;
 							this.playSound(1);
 							setTimeout(() => this.red = false, 1000);
@@ -290,7 +308,7 @@
 							break;
 
 						case 2:
-							console.log(2);
+							//console.log(2);
 							this.blue = true;
 							this.playSound(2);
 							setTimeout(() => this.blue = false, 1000);
@@ -299,8 +317,7 @@
 							break;
 
 						case 3:
-							console.log(3);
-
+							//console.log(3);
 							this.yellow = true;
 							this.playSound(3);
 							setTimeout(() => this.yellow = false, 1000);
@@ -309,8 +326,7 @@
 							break;
 
 						case 4:
-							console.log(4);
-
+							//console.log(4);
 							this.green = true;
 							this.playSound(4);
 							setTimeout(() => this.green = false, 1000);
