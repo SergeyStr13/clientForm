@@ -173,14 +173,13 @@
 			<li v-bind:class="[{active: green}, 'green']"	data-tile="4" v-on:click="buttonClick"></li>
 		</ul>
 		<div>Уровень {{ round }}</div>
-		<div>Сложность {{ level }}</div>
 		<button type="button" id="start" v-on:click="startGame">Start</button>
 		<button type="button" id="reset" v-on:click="resetGame">Reset</button>
 
 		<div data-action="sound"></div>
 
 		<div class="level">
-			<p>Сложность:</p>
+			<p>Сложность: {{ level }}</p>
 
 			<label>
 				 1
@@ -224,10 +223,11 @@
 
 			methods: {
 				startGame: function(event) {
-					this.series = [];
+					/*this.series = [];
 					this.userSeries = [];
 					this.endRound = false;
-					this.usersClickCount = 0;
+					this.usersClickCount = 0;*/
+					this.clear();
 					this.setDelay();
 
 					console.log('Новая игра. Раунд:', this.round);
@@ -254,6 +254,18 @@
 							this.delay = 400;
 							break;
 					}
+				},
+
+				clear: function () {
+					this.series = [];
+					this.userSeries = [];
+					this.endRound = false;
+					this.usersClickCount = 0;
+
+					this.red = false;
+					this.blue  = false;
+					this.yellow = false;
+					this.green = false;
 				},
 
 				resetGame: function (event) {
