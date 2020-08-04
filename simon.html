@@ -173,6 +173,7 @@
 			<li v-bind:class="[{active: green}, 'green']"	data-tile="4" v-on:click="buttonClick"></li>
 		</ul>
 		<div>Уровень {{ round }}</div>
+		<div>Сложность {{ level }}</div>
 		<button type="button" id="start" v-on:click="startGame">Start</button>
 		<button type="button" id="reset" v-on:click="resetGame">Reset</button>
 
@@ -183,17 +184,17 @@
 
 			<label>
 				 1
-				<input type="radio" name="level" class="level" value="1">
+				<input type="radio" v-model="level" id="level-1" value="1">
 			</label>
 
 			<label>
 				2
-				<input type="radio" name="level" class="level" value="2">
+				<input type="radio" v-model="level" id="level-2" value="2">
 			</label>
 
 			<label>
 				3
-				<input type="radio" name="level" class="level" value="3">
+				<input type="radio" v-model="level" id="level-3" value="3">
 			</label>
 
 		</div>
@@ -203,6 +204,7 @@
 		const app = new Vue({
 			el: '#app',
 			data: {
+				level: 1,
 
 				delay: 0,
 				red: false,
@@ -226,15 +228,31 @@
 					this.userSeries = [];
 					this.endRound = false;
 					this.usersClickCount = 0;
-					this.delay =  0;
+					this.setDelay();
 
 					console.log('Новая игра. Раунд:', this.round);
 					this.countLight = this.round + 1;
 					console.log('Подсвечиваю '+this.countLight+' элементов');
 
 					for (let i = 0; i < this.countLight; i++) {
-						setTimeout( () => this.lighting(this.getRandom()), 1000 + this.delay);
+						setTimeout( () => this.lighting(this.getRandom()), 0 + this.delay);
 						this.delay += 400;
+					}
+				},
+
+				setDelay: function () {
+					switch (this.level) {
+						case 1:
+							this.delay = 1500;
+							break;
+
+						case 2:
+							this.delay = 1000;
+							break;
+
+						case 3:
+							this.delay = 400;
+							break;
 					}
 				},
 
